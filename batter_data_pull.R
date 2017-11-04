@@ -2,7 +2,7 @@ library(stattleshipR)
 
 
 
-set_token("f685110b98683b562952ecdc164c90d8")
+set_token("")
 
 
 #grab all batting data for 2015
