@@ -1,6 +1,6 @@
 library(stattleshipR)
 
-set.seed(1234)
+set.seed(12345)
 
 set_token("")
 
