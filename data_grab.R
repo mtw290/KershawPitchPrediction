@@ -6,7 +6,7 @@ get_pitches <- function(pitcher, year){
   library(stattleshipR)
   library(tidyverse)
 
-  set_token("f685110b98683b562952ecdc164c90d8")
+  set_token("")
 
   #api call for pitch data
   a <- ss_get_result(sport = "baseball", 
