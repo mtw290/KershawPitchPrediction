@@ -4,8 +4,9 @@ library(lubridate)
 library(pitchRx)
 library(dplyr)
 
+
 ##### snap up data from earlier steps
-  pitchDat <- read.csv("C://Users/Mike/Documents/kershaw/current_kershaw.csv")
+  pitchDat <- new_kershaw
   pitchDat <- pitchDat %>% 
     mutate(year = year(as.Date(date)), month = month(as.Date(date)))
 
