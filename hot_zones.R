@@ -6,7 +6,7 @@ library(dplyr)
 
 
 ##### snap up data from earlier steps
-  pitchDat <- new_kershaw
+  pitchDat <- read.csv("C://Users/Mike/Documents/kershaw/current_kershaw.csv")
   pitchDat <- pitchDat %>% 
     mutate(year = year(as.Date(date)), month = month(as.Date(date)))
 
@@ -32,17 +32,22 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(heat = sum(hit)/sum(counter)) %>%
     filter(!is.na(zone)) 
   
-  heat_e16 <- collect(absINeed_e16) %>% 
-    spread(zone, heat) %>% 
+  heat_early16 <- collect(absINeed_e16) %>% 
+    spread(zone, heat)
+  
+  
+  names(heat_early16) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
+                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
+                       "zone_8", "zone_9")
+  heat_early16 <- select(heat_early16, "batter", "zone_1", "zone_2", "zone_3", "zone_4", "zone_5", 
+                     "zone_6", "zone_7", "zone_8", "zone_9")
+  
+  heat_e16 <- heat_early16 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
     mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
-  
-  names(heat_e16) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
-                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
-                       "zone_8", "zone_9")
 
 #late 2016 - batting data up to end of 2016
   
@@ -55,17 +60,22 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(heat = sum(hit)/sum(counter)) %>%
     filter(!is.na(zone)) 
   
-  heat_l16 <- collect(absINeed_l16) %>% 
-    spread(zone, heat) %>% 
+  heat_late16 <- collect(absINeed_l16) %>% 
+    spread(zone, heat)
+  
+  
+  names(heat_late16) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
+                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
+                       "zone_8", "zone_9")
+  heat_late16 <- select(heat_late16, "batter", "zone_1", "zone_2", "zone_3", "zone_4", "zone_5", 
+                     "zone_6", "zone_7", "zone_8", "zone_9")
+  
+  heat_l16 <- heat_late16 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
     mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
-  
-  names(heat_l16) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
-                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
-                       "zone_8", "zone_9")
 #####
 ##### do the same thing for 2017
   playersINeed17 <- filter(pitchDat, year == 2017) %>% distinct(batter)
@@ -80,17 +90,29 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(heat = sum(hit)/sum(counter)) %>%
     filter(!is.na(zone)) 
   
-  heat_e17 <- collect(absINeed_e17) %>% 
-    spread(zone, heat) %>% 
+  heat_early17 <- collect(absINeed_e17) %>% 
+    spread(zone, heat)
+  
+  # %>% 
+  #   gather(zone, heat, -batter) %>% 
+  #   group_by(batter) %>% 
+  #   mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
+  #   select(-starts_with("heat")) %>% 
+  #   spread(zone, new_heat)
+  
+  names(heat_early17) <- c("batter", "zone_1", "zone_2", "zone_3", "zone_4", "zone_5", 
+                       "zone_6", "zone_7", "zone_8", "zone_9", "zone_11", "zone_12", 
+                       "zone_13", "zone_14")
+  heat_early17 <- select(heat_early17, "batter", "zone_1", "zone_2", "zone_3", "zone_4", "zone_5", 
+                     "zone_6", "zone_7", "zone_8", "zone_9")
+  
+  heat_e17 <- heat_early17 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
     mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
   
-  names(heat_e17) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
-                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
-                       "zone_8", "zone_9")
   
   #late 2017
   absINeed_l17 <- filter(tbl(db,"atbat"), batter %in% playersINeed17$batter) %>% 
@@ -102,18 +124,22 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(heat = sum(hit)/sum(counter)) %>%
     filter(!is.na(zone)) 
   
-  heat_l17 <- collect(absINeed_l17) %>% 
-    spread(zone, heat) %>% 
+  heat_late17 <- collect(absINeed_l17) %>% 
+    spread(zone, heat)
+  
+  
+  names(heat_late17) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
+                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
+                       "zone_8", "zone_9")
+  heat_late17 <- select(heat_late17, "batter", "zone_1", "zone_2", "zone_3", "zone_4", "zone_5", 
+                     "zone_6", "zone_7", "zone_8", "zone_9")
+  
+  heat_l17 <- heat_late17 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
     mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
-  
-  names(heat_l17) <- c("batter", "zone_1", "zone_11", "zone_12", "zone_13", "zone_14",
-                       "zone_2", "zone_3", "zone_4", "zone_5", "zone_6", "zone_7",
-                       "zone_8", "zone_9")
-
 
 #####figure out which batters in 2016/7 don't have data from previous years - for these
 ##players use same year data for entire year
