@@ -4,6 +4,7 @@
 
 pitchDat2$lp_zone = 0
 pitchDat2$lp_type = "ND"
+pitchDat2$bats_l = -1
 
 pitchDat3 <- pitchDat2[1,]
 
@@ -20,10 +21,19 @@ for (i in 1:length(unique(pitchDat2$date))){
         new$lp_type[j] <- as.character(new$pitch_type.x[which(new$pitch_count == (unique(new$pitch_count)[j])-1)])
         
       }
+      
+      if (new$bats[j] == "bats_left"){
+        new$bats_l[j] <- 1
+      }
     }
   pitchDat3 <- rbind(pitchDat3, new)
 }
 pitchDat3 <- pitchDat3[-1,]
 pitchDat3$lp_type[pitchDat3$lp_type == ""] <- NA
+
+pitchDat3 <- pitchDat3 %>% 
+  group_by(batter, date, at_bat_outs1) %>% 
+  mutate(outs = min(at_bat_outs))
+
 
 

@@ -11,5 +11,6 @@ kershaw17 <- get_pitches("mlb-clayton-kershaw", 2017)
 
 source("savant_data.R")
 source("hot_zones.R")
+source("last_pitch_data.R")
 
 write.csv(pitchDat2, "current_kershaw.csv")
