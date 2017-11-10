@@ -47,4 +47,5 @@ names(dum_var) <- sub(".....1", "_", names(dum_var))
 pitchDat5 <- pitchDat4 %>% 
   select(-starts_with("on_"), -outs_when_up, -strikes, -balls, -at_bat_pitch_count,
          -lp_type,-inning, -lp_horizontal, -lp_vertical, -scoreDiff) %>% 
-  cbind(dum_var)
+  cbind(dum_var) %>% 
+  filter(target_type %in% c("FA", "SL", "CU"))

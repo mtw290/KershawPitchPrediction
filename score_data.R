@@ -25,7 +25,7 @@ hold <- right_join(scoreDat1, pitchDat3, by = c("date" = "date1", "batter" = "ba
 #3 records are missing - why? not sure, but that at bat by Carlos Gonzalez is missing from the 
 #sqlite db, nothing changes in the game so I'll fill with same value from before and after the at bat
 pitchDat3 <- hold
-pitchDat3$scoreDiff[is.na(pitchDat3$scoreDiff)] <- 1
+pitchDat3$scoreDiff[is.na(pitchDat3$scoreDiff)] <- 0
 
 
 
