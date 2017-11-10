@@ -287,5 +287,12 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     
 #reconstitute data set
     pitchDat2 <- rbind(pitchDat16.2, pitchDat16.3, pitchDat17.2, pitchDat17.3)
+    
+source("score_data.R")
 
+source("last_pitch_data.R")
+    
+
+    
+    
 

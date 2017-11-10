@@ -22,7 +22,7 @@ for (i in 1:length(unique(pitchDat2$date))){
         
       }
       
-      if (new$bats[j] == "bats_left"){
+      if (new$stand[j] == "L"){
         new$bats_l[j] <- 1
       }
     }
@@ -31,9 +31,6 @@ for (i in 1:length(unique(pitchDat2$date))){
 pitchDat3 <- pitchDat3[-1,]
 pitchDat3$lp_type[pitchDat3$lp_type == ""] <- NA
 
-pitchDat3 <- pitchDat3 %>% 
-  group_by(batter, date, at_bat_outs1) %>% 
-  mutate(outs = min(at_bat_outs))
 
 
 
