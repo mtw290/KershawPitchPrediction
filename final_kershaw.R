@@ -1,22 +1,25 @@
 library(stattleshipR)
 library(tidyverse)
 library(lubridate)
+library(dummies)
+set_token("f685110b98683b562952ecdc164c90d8")
 
-setwd("C://Users/Mike/Documents/kershaw/")
+setwd("C://Users/Mike/Documents/kershaw/KershawPictchPrediction/")
 
 source("data_grab.R")
 
 kershaw16 <- get_pitches("mlb-clayton-kershaw", 2016)
-kershaw17 <- get_pitches("mlb-clayton-kershaw", 2017)
+set_token("f685110b98683b562952ecdc164c90d8")
+
+kershaw17 <- get_pitches(pitcher = "mlb-clayton-kershaw", year = 2017)
 
 source("savant_data.R")
 source("hot_zones.R")
-source("last_pitch_data.R")
 
 #####
 pitchDat4 <- pitchDat3 %>% 
   ungroup() %>% 
-  arrange(date.y, pitch_count) %>% 
+  arrange(date, pitch_count) %>% 
   mutate(index = 1000:(nrow(pitchDat3)+999)) %>% 
   select(index,batter, starts_with("zone"), starts_with("next"), starts_with("cur"), CU_miss, FA_miss, SL_miss,
          at_bat_pitch_count, balls, strikes, on_3b, on_2b, on_1b, lp_zone, lp_type, bats_l, 
@@ -24,8 +27,8 @@ pitchDat4 <- pitchDat3 %>%
   mutate(mon_third = if_else(on_3b == "null", -1, 1),
          mon_second = if_else(on_2b == "null", -1, 1),
          mon_first = if_else(on_1b == "null", -1, 1),
-         pitch_count = (pitch_count - mean(pitch_count))/sd(pitch_count),
-         scoreStd = (scoreDiff-mean(scoreDiff))/sd(scoreDiff),
+         #pitch_count = (pitch_count - mean(pitch_count))/sd(pitch_count),
+         scoreStd = scoreDiff, #(scoreDiff-mean(scoreDiff))/sd(scoreDiff),
          lp_vertical = if_else(lp_zone %in% c(1:3, 11, 12), "high", 
                                if_else(lp_zone %in% c(4:6), "middle", "low")),
          lp_horizontal = if_else(lp_zone %in% c(1, 4, 7, 11, 13), "umpLeft", 
@@ -65,3 +68,6 @@ pitchDat5 <- pitchDat4 %>%
 #####
 
 write.csv(pitchDat5, "current_kershaw2.csv")
+
+
+source("last_data_clean_step.R")

@@ -1,17 +1,17 @@
 library(lubridate)
 library(tidyverse)
 library(pitchRx)
-setwd("C://Users/Mike/Documents/kershaw/")
 
+setwd("C://Users/Mike/Documents/kershaw/KershawPictchPrediction/")
 #join savant data and stattleship data
-kershawSavant <- read.csv("C://Users/Mike/Documents/kershaw/dodger_savant.csv") %>% 
+kershawSavant <- read.csv("dodger_savant.csv") %>% 
               filter(player_name == "Clayton Kershaw") %>% 
               mutate(game_date = as.Date(game_date)) %>% 
               arrange(game_date, inning, at_bat_number, pitch_number) %>% 
               group_by(game_date, inning) %>% 
               mutate(inning_pitch_count = row_number())
 
-new_kershaw <- rbind(read.csv("kershaw_16_current.csv"), read.csv("kershaw_17_current.csv")) %>% 
+new_kershaw <- rbind(kershaw16, kershaw17) %>% 
             mutate(date = ymd(paste(year(pitched_at),month(pitched_at),day(pitched_at)))) %>%
             mutate(date = as.Date(ifelse(date %in% kershawSavant$game_date, date, date-1), origin = "1970-01-01")) %>% 
             filter(date > as.Date("2016-04-01")) %>% 

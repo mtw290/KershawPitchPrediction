@@ -1,4 +1,4 @@
-setwd("C://Users/Mike/Documents/kershaw/")
+# setwd("C://Users/Mike/Documents/kershaw/")
 
 
 
@@ -6,7 +6,7 @@ get_pitches <- function(pitcher, year){
   library(stattleshipR)
   library(tidyverse)
 
-  set_token("")
+  set_token("f685110b98683b562952ecdc164c90d8")
 
   #api call for pitch data
   a <- ss_get_result(sport = "baseball", 
@@ -48,7 +48,7 @@ get_pitches <- function(pitcher, year){
            home_runs_past = home_runs, 
            iso_past = iso, 
            strikeouts_past = strikeouts) %>% 
-        apply(., 2, function(x) (x-mean(x, na.rm = T))/sd(x, na.rm = T)) %>% 
+        #apply(., 2, function(x) (x-mean(x, na.rm = T))/sd(x, na.rm = T)) %>% 
         data.frame(.,player_id = g$player_id) %>% 
         filter(player_id %in% e$hitter_id) %>% 
         filter(!is.na(apply(.[,1:8], 1, sum))) %>% 
@@ -78,7 +78,7 @@ get_pitches <- function(pitcher, year){
                home_runs_cur = home_runs, 
                iso_cur = iso, 
                strikeouts_cur = strikeouts) %>% 
-        apply(., 2, function(x) (x-mean(x, na.rm = T))/sd(x, na.rm = T)) %>% 
+        #apply(., 2, function(x) (x-mean(x, na.rm = T))/sd(x, na.rm = T)) %>% 
         data.frame(.,player_id = i$player_id) %>% 
         filter(player_id %in% e$hitter_id) %>% 
         filter(!is.na(apply(.[,1:8], 1, sum))) %>% 

@@ -6,7 +6,7 @@ library(dplyr)
 
 
 ##### snap up data from earlier steps
-  pitchDat <- read.csv("C://Users/Mike/Documents/kershaw/current_kershaw1.csv")
+  pitchDat <- new_kershaw
   pitchDat <- pitchDat %>% 
     mutate(year = year(as.Date(date)), month = month(as.Date(date)))
 
@@ -45,7 +45,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
   heat_e16 <- heat_early16 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
-    mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
+    mutate(new_heat = heat) %>% #(heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
 
@@ -73,7 +73,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
   heat_l16 <- heat_late16 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
-    mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
+    mutate(new_heat = heat) %>% #(heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
 #####
@@ -109,7 +109,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
   heat_e17 <- heat_early17 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
-    mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
+    mutate(new_heat = heat) %>% #(heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
   
@@ -137,7 +137,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
   heat_l17 <- heat_late17 %>% 
     gather(zone, heat, -batter) %>% 
     group_by(batter) %>% 
-    mutate(new_heat = (heat-mean(heat))/sd(heat)) %>% 
+    mutate(new_heat = heat) %>% #(heat-mean(heat))/sd(heat)) %>% 
     select(-starts_with("heat")) %>% 
     spread(zone, new_heat)
   
@@ -161,7 +161,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(swingStrike = sum(swingMiss)/sum(counter), pitch_type_count = sum(counter)) %>%
     filter(pitch_type %in% c("FA", "CU", "SL"))  %>% 
     group_by(pitch_type) %>% 
-    mutate(swingMissStd = (swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
+    mutate(swingMissStd = swingStrike) %>% #(swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
     select(batter, pitch_type, swingMissStd) %>% 
     spread(pitch_type, swingMissStd) %>% 
     replace_na(list(FA = 0, CU = 0, SL = 0))
@@ -182,7 +182,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(swingStrike = sum(swingMiss)/sum(counter), pitch_type_count = sum(counter)) %>%
     filter(pitch_type %in% c("FA", "CU", "SL"))  %>% 
     group_by(pitch_type) %>% 
-    mutate(swingMissStd = (swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
+    mutate(swingMissStd = swingStrike) %>% #(swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
     select(batter, pitch_type, swingMissStd) %>% 
     spread(pitch_type, swingMissStd) %>% 
     replace_na(list(FA = 0, CU = 0, SL = 0))
@@ -209,7 +209,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(swingStrike = sum(swingMiss)/sum(counter), pitch_type_count = sum(counter)) %>%
     filter(pitch_type %in% c("FA", "CU", "SL"))  %>% 
     group_by(pitch_type) %>% 
-    mutate(swingMissStd = (swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
+    mutate(swingMissStd = swingStrike) %>% #(swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
     select(batter, pitch_type, swingMissStd) %>% 
     spread(pitch_type, swingMissStd) %>% 
     replace_na(list(FA = 0, CU = 0, SL = 0))
@@ -230,7 +230,7 @@ db <- src_sqlite("D://pitchfx.sqlite3")
     summarize(swingStrike = sum(swingMiss)/sum(counter), pitch_type_count = sum(counter)) %>%
     filter(pitch_type %in% c("FA", "CU", "SL"))  %>% 
     group_by(pitch_type) %>% 
-    mutate(swingMissStd = (swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
+    mutate(swingMissStd = swingStrike) %>% #(swingStrike-mean(swingStrike))/sd(swingStrike)) %>% 
     select(batter, pitch_type, swingMissStd) %>% 
     spread(pitch_type, swingMissStd) %>% 
     replace_na(list(FA = 0, CU = 0, SL = 0))
